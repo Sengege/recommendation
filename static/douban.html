@@ -1,0 +1,71 @@
+  <span id="douban-box">
+  </span>
+
+<script id="mv-tmp" type="x-tmpl-mustache">
+<li class="aui-list-item">
+    <div class="aui-card-list-header aui-border-b">
+        <div>{{type}}:{{name}}</div>
+        <i class="aui-iconfont aui-icon-close aui-text-danger" onclick="alert('不喜欢')"></i>
+    </div>
+      <div class="aui-media-list-item-inner" style="padding:15px">
+          <div class="aui-list-item-media">
+              <img src="{{img}}">
+          </div>
+          <div class="aui-list-item-inner" style="padding-left:15%" >
+              <div class="aui-list-item-text">
+            <div class="aui-list-item-title">豆瓣评分:{{rating}}
+            <div class="aui-list-item-right">日期: {{year}}</div>
+              </div>
+              <div class="aui-list-item-text">
+                  简介:{{summary}}
+              </div>
+              <span class='critics' onclick="alert('bingo')"><i class="aui-iconfont aui-icon-like aui-text-danger" width="50px" ></i><a>喜欢</a></span>
+              <span class='critics' onclick="alert('bingo')"><i class="aui-iconfont aui-icon-display aui-text-danger" width="50px" ></i><a>想看</a></span>
+              <span class='critics' onclick="alert('bingo')"><i class="aui-iconfont aui-icon-trash aui-text-danger" width="50px" ></i><a>不再出现</a></span>
+
+          </div>
+      </div>
+<hr/>
+  </li>
+  </script>
+  <script>
+      //获取首页展示
+    function get() {
+        var url="/data"
+        var request=new XMLHttpRequest()
+        request.open("GET",url)
+        request.send()
+        request.onreadystatechange=function (){
+            if (request.readyState==4 && request.status==200){
+                var rs=request.responseText
+
+                story_list=JSON.parse(rs)
+
+                box={items:story_list}
+                var tmp=document.getElementById("tmp").innerHTML
+                output=Mustache.render(tmp,box);
+                var list=document.getElementById("content")
+                list.innerHTML=output
+                get_item_by_similaruser()
+            }}
+
+        var douban="/test/mv"
+        var r2=new XMLHttpRequest()
+        r2.open("GET",douban)
+        r2.send()
+        r2.onreadystatechange=function (){
+            if (r2.readyState==4 && r2.status==200){
+                var rs=r2.responseText
+
+                var mv=JSON.parse(rs)
+                mv.content['type']=mv.type
+                //mv.content['summary']=mv.content.summary.slice(0,30)
+                var tmp=document.getElementById("mv-tmp").innerHTML
+                output=Mustache.render(tmp,mv.content);
+                var db=document.getElementById("douban-box")
+                db.innerHTML=output
+            }}
+
+
+    }
+      </script>
