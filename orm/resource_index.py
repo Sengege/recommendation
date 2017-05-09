@@ -8,7 +8,7 @@
 @file: resource_index
 @time: 26/4/17 AM12:19
 """
-from init import db
+from init import mysqldb as db
 class Resource(db.Model):
     __tablename__ = "resource_index"
     resource_id = db.Column(db.Integer, primary_key = True)

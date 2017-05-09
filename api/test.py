@@ -16,7 +16,7 @@ from pymongo import MongoClient
 
 #dry
 from orm import Resource, Collect
-from init import db as mysql_db
+from init import mysqldb as mysql_db
 from init import app,jsonify,session
 
 host="zp.tristan.pub"
@@ -29,11 +29,12 @@ db=mongoConn.paw
 @app.route("/data")
 def data():
     rs_list=[]
-    for i in range(3):
+    for i in range(2):
         cursor=db.data.find({"tid":3})
         seed=random.randint(0,cursor.count()-1)
         cursor.skip(seed)
         zhihu=cursor.next()
+        zhihu['short']['date']=zhihu['date']
         rs_list.append(zhihu['short'])
     #zhihu['oid']=str(zhihu.pop("_id"))
 

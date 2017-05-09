@@ -8,13 +8,13 @@
 @file: get_data
 @time: 25/4/17 PM10:56
 """
-from init import app,db_mongo,jsonify
+from init import app,mongodb,jsonify
 import random
 @app.route('/get/zhihudaily')
 def get_zhdaily():
     content=list()
     for i in range(10):
-        cursor=db_mongo.data.find({"tid":3})
+        cursor=mongodb.data.find({"tid":3})
         seed=random.randint(0,cursor.count()-1)
         cursor.skip(seed)
         dl=cursor.next()
@@ -44,7 +44,7 @@ def get_movie():
 def get_book():
     content=list()
     for i in range(10):
-        cursor=db_mongo.data.find({"tid":2})
+        cursor=mongodb.data.find({"tid":2})
         seed=random.randint(0,cursor.count()-1)
         cursor.skip(seed)
         dl=cursor.next()

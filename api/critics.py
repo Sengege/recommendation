@@ -8,7 +8,7 @@
 @file: critics
 @time: 26/4/17 AM12:08
 """
-from init import app,jsonify,db
+from init import app,jsonify,mysqldb as db
 from orm import Resource,Critics
 @app.route('/critics/<uid>/<score>/<tid>/<oid>/<id>')
 def like(uid,score,tid,oid,id):

@@ -8,7 +8,7 @@
 @file: critics
 @time: 26/4/17 AM12:48
 """
-from init import db
+from init import mysqldb as db
 class Critics(db.Model):
     __tablename__ = "critics"
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)
