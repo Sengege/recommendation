@@ -1,0 +1,480 @@
+{% raw %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta name="referrer" content="never">
+    <script src="/static/script/mustache.js"></script>
+
+
+    <title>推送系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/aui.css" />
+    <style type="text/css">
+        #demo {
+            width: 4rem;
+            height: 4rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -2rem;
+            margin-top: -2rem;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            line-height: 4rem;
+            text-align: center;
+            color: #212121;
+            font-size: 1.2rem;
+        }
+
+        .user-info {
+            background-color: #ffffff;
+            padding: 0.75rem 0;
+        }
+        img.avatar {
+            display: block;
+            margin: 0 auto;
+            width: 20%;
+        }
+        .aui-list .aui-list-header {
+            background-color: #ffffff;
+            line-height: 1.2rem;
+        }
+        .aui-list .aui-list-item {
+            background-color: #f8f6ef;
+        }
+        .critics{
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+    </style>
+</head>
+<body onload="get()">
+<div id="index" style="padding-bottom:60px">
+  <div class="aui-searchbar" id="search">
+      <div class="aui-searchbar-input aui-border-radius">
+          <i class="aui-iconfont aui-icon-search"></i>
+          <input type="search" placeholder="请输入搜索内容" id="search-input">
+          <div class="aui-searchbar-clear-btn">
+              <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+      </div>
+      <div class="aui-searchbar-btn" tapmode>取消</div>
+  </div>
+<script id="mv-tmp" type="x-tmpl-mustache">
+<li class="aui-list-item">
+    <div class="aui-card-list-header aui-border-b">
+        <div>{{type}}:{{name}}</div>
+        <i class="aui-iconfont aui-icon-close aui-text-danger" onclick="alert('不喜欢')"></i>
+    </div>
+      <div class="aui-media-list-item-inner" style="padding:15px">
+          <div class="aui-list-item-media">
+              <img src="{{img}}">
+          </div>
+          <div class="aui-list-item-inner" style="padding-left:15%" >
+              <div class="aui-list-item-text">
+            <div class="aui-list-item-title">豆瓣评分:{{rating}}
+            <div class="aui-list-item-right">日期: {{year}}</div>
+              </div>
+              <div class="aui-list-item-text">
+                  简介:{{summary}}
+              </div>
+              <span class='critics' onclick="alert('bingo')"><i class="aui-iconfont aui-icon-like aui-text-danger" width="50px" ></i><a>喜欢</a></span>
+              <span class='critics' onclick="alert('bingo')"><i class="aui-iconfont aui-icon-display aui-text-danger" width="50px" ></i><a>想看</a></span>
+              <span class='critics' onclick="alert('bingo')"><i class="aui-iconfont aui-icon-trash aui-text-danger" width="50px" ></i><a>不再出现</a></span>
+
+          </div>
+      </div>
+<hr/>
+  </li>
+  </script>
+  <span id="douban-box">
+  </span>
+<ul class="aui-list aui-media-list" id="content">
+
+
+<script id="tmp" type="x-tmpl-mustache">
+
+        {{#items}}
+        <li class="aui-list-item" value="{{id}} "onclick="getdetail(this.value)">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-18">{{title}}</div>
+                    </div>
+                    <div class="aui-info aui-padded-b-0">
+                        <div class="aui-info-item aui-font-size-12">
+                            <img src="/static/image/liulangnan.png" style="width:1rem" class="aui-img-round" /><span class="aui-margin-l-5">知乎日报</span>
+                        </div>
+                        <div class="aui-info-item aui-font-size-12">2017-05-01</div>
+                    </div>
+                </div>
+                <div class="aui-list-item-media">
+                    <img src="{{images}}">
+                </div>
+            </div>
+        </li>
+        {{/items}}
+
+</script>
+
+    </ul>
+
+</div>
+</div>
+<div id="detail-box" style="display: None">
+    <header class="aui-bar aui-bar-nav">
+        <a class="aui-pull-left aui-btn" onclick="d_back()">
+            <span class="aui-iconfont aui-icon-left"></span>返回
+        </a>
+        <div class="aui-title"> 日报</div>
+        <a class="aui-pull-right aui-btn aui-btn-outlined" onclick="collect()">
+            <span class="aui-iconfont aui-icon-star"></span>收藏
+        </a>
+    </header>
+<div id="detail" style="padding-bottom: 70px;margin: 10px 10px 10px 0px">
+
+
+</div>
+</div>
+<div id="collect" style="display: None">
+</div>
+<script id="collect_tmp" type="x-tmpl-mustache">
+<ul class="aui-list aui-list-in">
+    {{#items}}
+    <li class="aui-list-header" value='{{id}}' onclick='getdetail(this.value)'>
+    {{title}}
+    </li>
+    {{/items}}
+</ul>
+</script>
+<div id="profile" style="display: None">
+<header class="aui-bar aui-bar-nav">个人资料</header>
+<div id="profile-show"></div>
+<script id="userinfo" type="x-tmpl-mustache">
+<section class="aui-content user-info aui-text-center aui-margin-b-15">
+        <img src="/static/image/liulangnan.png" class="avatar aui-img-round">
+        <h2 class="aui-margin-t-15">{{nickname}} <small><i class="aui-iconfont aui-icon-cert aui-text-danger"></i></small></h2>
+        <div class="aui-row aui-margin-t-15">
+            <div class="aui-col-xs-6 aui-text-right aui-border-r aui-padded-r-10">
+                <div class="aui-label aui-label-info">LV 6</div>
+            </div>
+            <div class="aui-col-xs-6 aui-text-left aui-padded-l-10">
+                ID:{{user_id}}
+            </div>
+        </div>
+        <div class="aui-row aui-margin-t-15">
+                <span class="aui-text-danger aui-margin-r-5">签名：</span>{{bio}}
+        </div>
+    </section>
+</script>
+
+</div>
+
+<div id="message" style="display:None">
+  <div class="aui-content aui-margin-b-15">
+      <ul class="aui-list aui-media-list">
+          <li class="aui-list-item wechat-top">
+              <div class="aui-media-list-item-inner">
+                  <div class="aui-list-item-label-icon">
+                      <i class="aui-iconfont aui-icon-mobile"></i>
+                  </div>
+                  <div class="aui-list-item-inner">
+                      IPHONE客户端在线
+                  </div>
+              </div>
+          </li>
+
+          <li class="aui-list-item aui-list-item-middle">
+              <div class="aui-media-list-item-inner">
+                  <div class="aui-list-item-media wechat-avatar">
+                      <div class="aui-badge">9</div>
+                      <img src="/static/image/demo5.png" />
+                  </div>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-text">
+                          <div class="aui-list-item-title">小红</div>
+                          <div class="aui-list-item-right">昨天</div>
+                      </div>
+                      <div class="aui-list-item-text aui-font-size-12">
+                          推荐了电影《降临》给你！
+                      </div>
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item aui-list-item-middle">
+              <div class="aui-media-list-item-inner">
+                  <div class="aui-list-item-media wechat-avatar">
+                      <img src="/static/image/demo1.png" />
+                  </div>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-text">
+                          <div class="aui-list-item-title">张三</div>
+                          <div class="aui-list-item-right">1天前</div>
+                      </div>
+                      <div class="aui-list-item-text aui-font-size-12">
+                        看看这个,哪一刻你会觉得现实美好？
+                      </div>
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item aui-list-item-middle">
+              <div class="aui-media-list-item-inner">
+                  <div class="aui-list-item-media wechat-avatar">
+                      <div class="aui-dot"></div>
+                      <img src="/static/image/demo4.png" />
+                  </div>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-text">
+                          <div class="aui-list-item-title">Alice</div>
+                          <div class="aui-list-item-right">星期一</div>
+                      </div>
+                      <div class="aui-list-item-text aui-font-size-12">
+                          Hi,Thanks for your treat~
+                      </div>
+                  </div>
+              </div>
+          </li>
+      </ul>
+  </div>
+</div>
+
+<footer class="aui-bar aui-bar-tab" id="footer">
+    <div class="aui-bar-tab-item aui-active" tapmode>
+        <i class="aui-iconfont aui-icon-home"></i>
+        <div class="aui-bar-tab-label">首页</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode>
+        <i class="aui-iconfont aui-icon-star"></i>
+        <div class="aui-bar-tab-label">收藏</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode>
+        <div class="aui-badge">99</div>
+        <i class="aui-iconfont aui-icon-paper"></i>
+        <div class="aui-bar-tab-label">消息</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode>
+        <div class="aui-dot"></div>
+        <i class="aui-iconfont aui-icon-my"></i>
+        <div class="aui-bar-tab-label">我的</div>
+    </div>
+</footer>
+</body>
+<script type="text/javascript" src="/static/script/api.js" ></script>
+<script type="text/javascript" src="/static/script/aui-tab.js" ></script>
+<script type="text/javascript">
+    var b1=document.getElementById("index")
+    var b2=document.getElementById("collect")
+    var b4=document.getElementById("profile")
+    var detial_box=document.getElementById("detail")
+    var d1=document.getElementById("detail-box")
+    var b3=document.getElementById("message")
+
+
+    apiready = function(){
+        api.parseTapmode();
+    }
+    var tab = new auiTab({
+        element:document.getElementById("footer")
+    },function(ret){
+        console.log(ret);
+        if(ret.index==4) {
+            b4.setAttribute("style", "display:block")
+            b1.setAttribute("style", "display:None")
+            b2.setAttribute("style", "display:None")
+            b3.setAttribute("style", "display:None")
+
+            d1.setAttribute("style", "display:None")
+            getuserinfo()
+        }
+        if(ret.index==3){
+          b4.setAttribute("style","display:None")
+          b1.setAttribute("style","display:None")
+          d1.setAttribute("style","display:None")
+          b3.setAttribute("style", "display:Block")
+
+          b2.setAttribute("style","display:None")
+
+        }
+        if(ret.index==2){
+          b4.setAttribute("style","display:None")
+          b1.setAttribute("style","display:None")
+          d1.setAttribute("style","display:None")
+          b3.setAttribute("style", "display:None")
+
+          b2.setAttribute("style","display:Block")
+          var url="/test/get_collect"
+          var request=new XMLHttpRequest()
+          request.open("GET",url)
+          request.send()
+          request.onreadystatechange=function (){
+            if (request.readyState==4 && request.status==200){
+                var rs=request.responseText
+
+                story_list=JSON.parse(rs)
+                console.log('collect:'+story_list.content)
+                box={items:story_list.content}
+                var tmp=document.getElementById("collect_tmp").innerHTML
+                output=Mustache.render(tmp,box);
+                var list=document.getElementById("collect")
+                list.innerHTML=output
+            }}
+          }
+        if(ret.index==1){
+          b1.setAttribute("style","display:block")
+          b4.setAttribute("style","display:None")
+          d1.setAttribute("style","display:None")
+          b2.setAttribute("style","display:None")
+          b3.setAttribute("style", "display:None")
+
+        }
+    });
+
+
+//获取首页展示
+    function get() {
+        var url="/data"
+        var request=new XMLHttpRequest()
+        request.open("GET",url)
+        request.send()
+        request.onreadystatechange=function (){
+            if (request.readyState==4 && request.status==200){
+                var rs=request.responseText
+
+                story_list=JSON.parse(rs)
+
+                box={items:story_list}
+                var tmp=document.getElementById("tmp").innerHTML
+                output=Mustache.render(tmp,box);
+                var list=document.getElementById("content")
+                list.innerHTML=output
+            }}
+
+        var douban="/test/mv"
+        var r2=new XMLHttpRequest()
+        r2.open("GET",douban)
+        r2.send()
+        r2.onreadystatechange=function (){
+            if (r2.readyState==4 && r2.status==200){
+                var rs=r2.responseText
+
+                var mv=JSON.parse(rs)
+                mv.content['type']=mv.type
+                //mv.content['summary']=mv.content.summary.slice(0,30)
+                var tmp=document.getElementById("mv-tmp").innerHTML
+                output=Mustache.render(tmp,mv.content);
+                var db=document.getElementById("douban-box")
+                db.innerHTML=output
+            }}
+
+
+    }
+
+function getdetail(id) {
+    var url="/detail/"+id
+    var request=new XMLHttpRequest()
+    request.open("GET",url)
+    request.send()
+    request.onreadystatechange=function (){
+        if (request.readyState==4 && request.status==200){
+            var detail=request.responseText
+            detail=JSON.parse(detail)
+            b1.setAttribute("style","display:None")
+            b4.setAttribute("style","display:None")
+            b2.setAttribute("style","display:None")
+            d1.setAttribute("style","display:Block")
+            b3.setAttribute("style", "display:None")
+            detial_box.innerHTML=detail.content
+            d1.setAttribute("value",id)
+        }}
+}
+
+
+//详情页返回
+function d_back() {
+
+    d1.setAttribute("style","display:None")
+    b1.setAttribute("style","display:Block")
+
+}
+
+//收藏资源
+function collect() {
+    id=d1.getAttribute("value")
+    var url="/collect/"+id
+
+    var request=new XMLHttpRequest()
+    request.open("GET",url)
+    request.send()
+    request.onreadystatechange=function (){
+        if (request.readyState==4 && request.status==200){
+            console.log(request.responseText)
+
+        }}
+}
+
+
+
+function getuserinfo() {
+    var url="/test/userinfo"
+    var request=new XMLHttpRequest()
+    request.open("GET",url)
+    request.send()
+    request.onreadystatechange=function (){
+        if (request.readyState==4 && request.status==200){
+            var user=JSON.parse(request.responseText)
+            var userinfo=document.getElementById("userinfo").innerHTML
+            output=Mustache.render(userinfo,user.message);
+            var profile=document.getElementById("profile-show")
+            profile.innerHTML=output
+        }}
+}
+
+</script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    }
+    var searchBar = document.querySelector(".aui-searchbar");
+    var searchBarInput = document.querySelector(".aui-searchbar input");
+    var searchBarBtn = document.querySelector(".aui-searchbar .aui-searchbar-btn");
+    var searchBarClearBtn = document.querySelector(".aui-searchbar .aui-searchbar-clear-btn");
+    if(searchBar){
+        searchBarInput.onclick = function(){
+            searchBarBtn.style.marginRight = 0;
+        }
+        searchBarInput.oninput = function(){
+            if(this.value.length){
+                searchBarClearBtn.style.display = 'block';
+                searchBarBtn.classList.add("aui-text-info");
+                searchBarBtn.textContent = "搜索";
+            }else{
+                searchBarClearBtn.style.display = 'none';
+                searchBarBtn.classList.remove("aui-text-info");
+                searchBarBtn.textContent = "取消";
+            }
+        }
+    }
+    searchBarClearBtn.onclick = function(){
+        this.style.display = 'none';
+        searchBarInput.value = '';
+        searchBarBtn.classList.remove("aui-text-info");
+        searchBarBtn.textContent = "取消";
+    }
+    searchBarBtn.onclick = function(){
+        var keywords = searchBarInput.value;
+        if(keywords.length){
+            searchBarInput.blur();
+            alert(keywords)
+            document.getElementById("search-keywords").textContent = keywords;
+        }else{
+            this.style.marginRight = "-"+this.offsetWidth+"px";
+            searchBarInput.value = '';
+            searchBarInput.blur();
+        }
+    }
+</script>
+</html>
+{% endraw %}
