@@ -49,14 +49,34 @@ def login():
         else:
             return jsonify(fail(103))
 
-@app.route('/signup',methods=['POST'])
+@app.route('/signup',methods=['POST','GET'])
 def sigup():
+    if request.method=='POST':
+        content=request.json.get("content")
+        user=User(content)
+        mysqldb.session.add(user)
+        try:
+            mysqldb.session.commit()
+            return jsonify({"status":1,"content":"success"})
+        except Exception,e:
+            return jsonify({"status":0,"content":e.message})
+    else:
+        content=dict()
+        content['username']=request.args.get('username')
+        content['password']=request.args.get('password')
+        content['nickname']=request.args.get('nickname')
+        content['gender']=request.args.get('gender')
+        content['bio']=request.args.get('bio')
+        user = User(content)
+        mysqldb.session.add(user)
+        try:
+            mysqldb.session.commit()
+            return jsonify({"status": 1, "content": "success"})
+        except Exception, e:
+            return jsonify({"status": 0, "content": e.message})
 
-    content=request.json.get("content")
-    user=User(content)
-    mysqldb.session.add(user)
-    try:
-        mysqldb.session.commit()
-        return jsonify({"status":1,"content":"success"})
-    except Exception,e:
-        return jsonify({"status":0,"content":e.message})
+@app.route('/logout')
+def logout():
+    if session.has_key('user'):
+        session.pop('user')
+    return "<h1>退出登录 <a href='/'>返回首页<br\/>"

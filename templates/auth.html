@@ -1,6 +1,6 @@
 {% raw %}
 <!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
@@ -11,11 +11,15 @@
 </head>
 <body>
 <div class="aui-bar aui-bar-btn aui-bar-btn-full" id="tab">
-    <div class="aui-bar-btn-item aui-active">注册</div>
-    <div class="aui-bar-btn-item">登录</div>
+    <div class="aui-bar-btn-item aui-active">登录</div>
+
+    <div class="aui-bar-btn-item ">注册</div>
 </div>
     <div class="aui-content aui-margin-b-15" id="sign-up" style="display:None">
+        <form action="/signup" method="get">
+
         <ul class="aui-list aui-form-list">
+
             <li class="aui-list-header">注册</li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
@@ -23,7 +27,17 @@
                         用户名
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="Name">
+                        <input type="text" placeholder="Name" name="username">
+                    </div>
+                </div>
+            </li>
+                  <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        昵称
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="起个霸气的称号吧" name="nickname">
                     </div>
                 </div>
             </li>
@@ -33,7 +47,7 @@
                         密码
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Password" name="password">
                     </div>
                 </div>
             </li>
@@ -43,7 +57,7 @@
                         年龄
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="number" placeholder="20">
+                        <input type="number" placeholder="20" name="age">
                     </div>
                 </div>
             </li>
@@ -53,8 +67,8 @@
                         性别
                     </div>
                     <div class="aui-list-item-input">
-                        <label><input class="aui-radio" type="radio" name="demo1" checked> Male</label>
-                        <label><input class="aui-radio" type="radio" name="demo1"> Female</label>
+                        <label><input class="aui-radio" type="radio" name="gender" value="1" checked> Male</label>
+                        <label><input class="aui-radio" type="radio" name="gender" value="0"> Female</label>
                     </div>
                 </div>
             </li>
@@ -85,11 +99,13 @@
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
-                    <div class="aui-btn aui-btn-info aui-margin-r-5">提交</div>
+                    <input class="aui-btn aui-btn-info aui-margin-r-5" type="submit">
+                    </input>
                     <div class="aui-btn aui-btn-danger aui-margin-l-5">取消</div>
                 </div>
             </li>
         </ul>
+        </form>
     </div>
     <div class="aui-content aui-margin-b-15" id="log-in" style="display:block">
         <ul class="aui-list aui-form-list">
@@ -148,11 +164,11 @@
                 element:bar[i],
                 repeatClick:false
             },function(ret){
-                if(ret.index==2){
+                if(ret.index==1){
                     sign.setAttribute("style","display:None");
                     log.setAttribute("style","display:Block");
                 }
-                if(ret.index==1)
+                if(ret.index==2)
                 {
                     log.setAttribute("style","display:None");
                     sign.setAttribute("style","display:Block");
@@ -177,10 +193,10 @@ function login(){
           var raw=request.responseText
           var user=JSON.parse(raw)
           if(user.status==1){
-            alert("登录成功")
+            //alert("登录成功")
             self.location='/'
           }else{
-            alert("登录失败")
+            //alert("登录失败")
           }
       }}
 }
