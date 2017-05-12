@@ -2,6 +2,9 @@
 # encoding: utf-8
 
 """
+
+for test
+
 @version: python2.7
 @author: ‘sen-ele‘
 @license: Apache Licence 
@@ -10,26 +13,16 @@
 """
 from init import app,mongodb,jsonify
 import random
-@app.route('/get/zhihudaily')
-def get_zhdaily():
-    content=list()
-    for i in range(10):
-        cursor=mongodb.data.find({"tid":3})
-        seed=random.randint(0,cursor.count()-1)
-        cursor.skip(seed)
-        dl=cursor.next()
-        dl['oid']=str(dl.pop('_id'))
-        content.append(dl)
-        if len(content)>=1:
-            break
 
-    return jsonify(content)
+@app.route('/')
+def index():
+    return jsonify({'message':'api version v1.0.1'})
 
-@app.route('/get/movie')
+@app.route('/movies')
 def get_movie():
     content=list()
     for i in range(10):
-        cursor=db_mongo.data.find({"tid":1})
+        cursor=mongodb.data.find({"tid":1})
         seed=random.randint(0,cursor.count()-1)
         cursor.skip(seed)
         dl=cursor.next()
@@ -40,7 +33,7 @@ def get_movie():
 
     return jsonify(content)
 
-@app.route('/get/book')
+@app.route('/books')
 def get_book():
     content=list()
     for i in range(10):
