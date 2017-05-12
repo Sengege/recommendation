@@ -17,6 +17,7 @@ from pymongo import MongoClient
 #mgclient=MongoClient(host,port)
 mgclient=MongoClient()
 app = Flask(__name__)
+
 app.secret_key = 'what the fucking key'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost:3306/mydb'

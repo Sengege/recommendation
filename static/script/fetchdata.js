@@ -163,6 +163,7 @@ function getuserinfo() {
             output=Mustache.render(userinfo,user.message);
             var profile=document.getElementById("profile-show")
             profile.innerHTML=output
+            getlabels()
         }}
 }
 
@@ -194,5 +195,24 @@ function get_item_by_similaruser() {
 
 
         }}
+
+}
+function getlabels() {
+    var temp=document.getElementById('labels').innerHTML
+    var obj=document.getElementById('label-box')
+    var url='/labels'
+    var request=new XMLHttpRequest()
+    request.open("GET",url)
+    request.send()
+    request.onreadystatechange=function (){
+        if (request.readyState==4 && request.status==200) {
+            var data=JSON.parse(request.responseText)
+            msg={'content':data}
+            output=Mustache.render(temp,msg);
+            obj.innerHTML=output
+
+
+        }
+        }
 
 }

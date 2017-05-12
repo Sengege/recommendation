@@ -60,7 +60,6 @@
     $("#searchbar").load("/static/searchbar.html");
    </script>
     </div>
-
     <div id="zhihupage">
 <script>
     $("#zhihupage").load("/static/zhihu.html");
@@ -71,11 +70,8 @@
     $("#doubanpage").load("/static/douban.html");
    </script>
     </div>
-
-
-
 </div>
-</div>
+
 <div id="detail-box" style="display: None">
     <header class="aui-bar aui-bar-nav">
         <a class="aui-pull-left aui-btn" onclick="d_back()">
@@ -91,7 +87,45 @@
 
 </div>
 </div>
-<div id="collect" style="display: None">
+<div id="collect" style="display: None"></div>
+
+<div id="profile" style="display: None">
+<header class="aui-bar aui-bar-nav">个人资料
+            <span class="aui-iconfont aui-icon-close"><a href="/logout">Logout</a></span>
+
+</header>
+<div id="profile-show"></div>
+
+
+    <section class="aui-content">
+        <ul class="aui-list aui-list-noborder">
+            <div class="aui-list-header">
+                <div>
+                    <i class="aui-iconfont aui-icon-my aui-text-danger"></i>
+                    个人中心
+                </div>
+            </div>
+             <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">最近关注</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title" id="label-box">最近关注的主题： </div>
+
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">联系人</div>
+                </div>
+            </li>
+
+        </ul>
+    </section>
+
 </div>
 <script id="collect_tmp" type="x-tmpl-mustache">
     <header class="aui-bar aui-bar-nav">
@@ -108,12 +142,13 @@
     {{/items}}
 </ul>
 </script>
-<div id="profile" style="display: None">
-<header class="aui-bar aui-bar-nav">个人资料
-            <span class="aui-iconfont aui-icon-close"><a href="/logout">Logout</a></span>
 
-</header>
-<div id="profile-show"></div>
+
+<script id="labels" type="x-tmpl-mustache">
+    {{#content}}
+    <a class="aui-label aui-label-primary">{{.}}</a>
+    {{/content}}
+</script>
 <script id="userinfo" type="x-tmpl-mustache">
 <section class="aui-content user-info aui-text-center aui-margin-b-15">
         <img src="/static/image/liulangnan.png" class="avatar aui-img-round">
@@ -222,13 +257,9 @@
         <div class="aui-bar-tab-label">我的</div>
     </div>
 </footer>
-    <script type="text/javascript" src="/static/script/api.js" ></script>
-    <script type="text/javascript" src="/static/script/aui-tab.js" ></script>
-
-
-    <script src="/static/script/fetchdata.js"></script>
+<script type="text/javascript" src="/static/script/api.js" ></script>
+<script type="text/javascript" src="/static/script/aui-tab.js" ></script>
+<script src="/static/script/fetchdata.js"></script>
 </body>
-
-
 </html>
 {% endraw %}
