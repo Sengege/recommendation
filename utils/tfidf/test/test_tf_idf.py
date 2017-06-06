@@ -23,4 +23,4 @@ for i in seg_list:
 wordcount=sorted(word_count.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
 
 for k,v in wordcount:
-    print k,v
+    print '关键词：',k,' --出现次数:',v
