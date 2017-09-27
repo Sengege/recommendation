@@ -3,8 +3,8 @@
 
 """
 @version: python2.7
-@author: ‘sen-ele‘
+@author: ‘trace_tristan@126.com‘
 @license: Apache Licence 
-@file: admin
-@time: 3/6/17 AM10:38
+@file: __init__.py
+@time: 27/9/17 AM11:30
 """
