@@ -8,7 +8,7 @@
 @file: collect
 @time: 6/5/17 PM1:19
 """
-from init import mysqldb as db
+from APIserver.init import mysqldb as db
 class Collect(db.Model):
     __tablename__ = "collect"
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)

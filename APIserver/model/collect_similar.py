@@ -8,7 +8,7 @@
 @file: collect_similar
 @time: 9/5/17 PM6:00
 """
-from init import mysqldb as db
+from APIserver.init import mysqldb as db
 
 class CollectSimilar(db.Model):
     __tablename__ = "collect_similar"

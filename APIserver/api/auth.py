@@ -8,15 +8,16 @@
 @file: auth.py
 @time: 17/4/17 PM8:15
 """
-from init import (
+from orm import User
+
+from APIserver.api import error_code
+from APIserver.init import (
     app,
     jsonify,
     request,
     mysqldb,
     session
 )
-from orm import User
-from api import error_code
 
 
 def fail(error):

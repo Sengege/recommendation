@@ -8,7 +8,6 @@
 @file: init.py
 @time: 17/4/17 PM8:14
 """
-from init import session,jsonify
 error_code={
     100:'User not find',
     101:'Password is wrong',

@@ -2,8 +2,9 @@
 # encoding: utf-8
 
 import os
-from run import index,auth,test,get_data,critics,recommend,app
-from utils.tfidf import get_labels
+
+from APIserver.run import app
+
 if os.path.exists('.env'):
     print('Importing environment from .env...')
     for line in open('.env'):

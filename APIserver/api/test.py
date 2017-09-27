@@ -11,13 +11,11 @@
 #org
 import random
 
-#third part
+from orm import Resource, Collect
 from pymongo import MongoClient
 
-#dry
-from orm import Resource, Collect
-from init import mysqldb as mysql_db
-from init import app,jsonify,session
+from APIserver.init import app,jsonify,session
+from APIserver.init import mysqldb as mysql_db
 
 host="zp.tristan.pub"
 port=10011

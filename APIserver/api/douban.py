@@ -11,7 +11,7 @@ for test
 @file: get_data
 @time: 25/4/17 PM10:56
 """
-from init import app,mongodb,jsonify
+from APIserver.init import app,mongodb,jsonify
 import random
 
 @app.route('/')

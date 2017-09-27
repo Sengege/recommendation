@@ -10,7 +10,7 @@
 """
 
 from orm import Collect,CollectSimilar
-from init import mysqldb
+from APIserver.init import mysqldb
 collect=mysqldb.session.query(Collect)
 mysqldb.session.query(CollectSimilar).delete()
 sm=dict()

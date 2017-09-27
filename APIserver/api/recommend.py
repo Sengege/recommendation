@@ -9,7 +9,7 @@
 @time: 9/5/17 PM6:12
 """
 from sqlalchemy import desc
-from init import app,session,jsonify,mysqldb,mongodb
+from APIserver.init import app,session,jsonify,mysqldb,mongodb
 from orm import CollectSimilar,Collect,Resource,User
 
 

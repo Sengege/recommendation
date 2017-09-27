@@ -9,9 +9,10 @@
 """
 import json
 
-from init import app,session
-from ui import render_template
-from api.get_data import *
+from WebUI.ui import render_template
+from APIserver.init import app,session
+
+
 @app.route('/test/home')
 def home():
     moives=get_movie().get_data()

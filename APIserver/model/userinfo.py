@@ -8,7 +8,7 @@
 @time: 17/4/17 PM9:03
 """
 import time
-from init import mysqldb as db
+from APIserver.init import mysqldb as db
 class User(db.Model):
     __tablename__ = "userinfo"
     user_id = db.Column(db.Integer, primary_key = True)

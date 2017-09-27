@@ -7,7 +7,7 @@
 #提取关键字
 
 from orm import Collect,Resource
-from init import session,mongodb,app,jsonify
+from APIserver.init import session,mongodb,app,jsonify
 #uid=session['user']['user_id']
 
 @app.route('/labels')

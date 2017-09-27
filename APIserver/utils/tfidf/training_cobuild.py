@@ -8,7 +8,7 @@
 @time: 10/5/17 PM5:28
 """
 from bs4 import BeautifulSoup
-from init import mongodb
+from APIserver.init import mongodb
 
 
 all_text=""
